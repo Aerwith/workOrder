@@ -1,0 +1,50 @@
+tr:nth-child(4n) {
+	background: #B0B0B0;
+}
+
+tr:nth-child(4n-1), tr:nth-child(4n-3) {
+	background: #FFF;
+}
+
+tr:nth-child(4n-2) {
+	background: #CCC;
+}
+
+.visible {
+	
+}
+
+.invisible {
+	display: none;
+}
+
+#contact
+{
+    display: none;
+    background: grey;
+    color: #FFF;
+    padding: 10px;
+}
+
+.container {
+	height:200px;
+	width:300px;
+	float:none;
+	margin:0x auto;
+	background: #f6f6f6;
+}
+
+.dhead {
+	height:20px;
+	width:inherit;
+	float:left;
+	background: crimson;
+}
+
+.body {
+	display: none;
+	height:170px;
+	width:inherit;
+	float:none;
+	background: black;
+}

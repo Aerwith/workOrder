@@ -1,4 +1,3 @@
-
 <html>
 	<head>
 		<script src="jquery-1.11.3.min.js"></script>
@@ -11,11 +10,11 @@
 	<body>
 		<!--Testing SQLite DB-->
 		<?php
-			$servername = 
-			$username = 
-			$password = 
-			$dbname = 
-
+			date_default_timezone_set('America/New_York');
+			$servername = "localhost";
+			$username = "root";
+			$password = "root";
+			$dbname = "maint";
 				// Create connection
 			$conn = new mysqli($servername, $username, $password, $dbname);
 			// Check connection
@@ -23,13 +22,13 @@
 			    die("Connection failed: " . $conn->connect_error);
 			} 
 			echo "Connected Successfully";
-
-		$conn->close();
-
+			$conn->close();
 		?>
 		<!--Form to enter new data -->
-		<form id="Form1" action="sendForm.php" method="post">
-		  Date: <input type="text" name="DateField"><br>
+		<form id="Form1" action="sendForm.php" method="POST">
+		<td><input type="hidden" name="dbuser" value="<?php echo $username?>"></td>      	
+		<td><input type="hidden" name="dbpass" value="<?php echo $password?>"></td>		  
+		Date: <input type="text" name="DateField"><br>
 		  Issue: <input type="text" name="Issue"><br>
 		  Time: <input type="text" name="Time"><br>
 		  Equipment: <input type="text" name="Equipment"><br>
@@ -40,11 +39,10 @@
 		</form>
 		<!-- This fetches the data you already have -->
 		<?php
-		$servername = 
-		$username = 
-		$password = 
-		$dbname = 
-
+			$servername = "localhost";
+			$username = "root";
+			$password = "root";
+			$dbname = "maint"; 
 			// Create connection
 		$conn = new mysqli($servername, $username, $password, $dbname);
 		// Check connection
@@ -52,39 +50,43 @@
 		    die("Connection failed: " . $conn->connect_error);
 		} 
 		$sql = mysqli_query($conn,"SELECT * FROM pending");
-		echo "Connected Successfully";
+		#echo "Connected Successfully";
+		#echo $sql->num_rows
+		
 		?>
+		<a href='file:///R:/Operation%20Instruction%20Procedures%20-%20OIP/'>Here</a>	
 		<!-- Display -->
 		<table>
 			<tr>
-				<th>ID</th>
+				
 				<th>Date</th>
-				<th>Equipment</th>
+				<th>C/N</th>
 				<th>Issue</th>
 				<th>Time</th>
+				<th>Status</th>
 			</tr>
 			<!-- get the data -->
 			<?php
+			
+				if (!$sql) {
+					
+    					printf("Error: %s\n", mysqli_error($conn));
+   					 exit();
+				}
+				
 				while($row = mysqli_fetch_array($sql)) {
 		            ?>
       <tr class="visible"><!-- Visible Row -->
-          <td><?php echo $row['ID']?></td>
-          <td><?php echo $row['DateField']?></td>
-          <td><?php echo $row['Equipment']?></td>
+          
+          <td><?php echo date('m/d/Y', $row['DateField']) ?></td>
+          <td><?php echo $row['CN']?></td>
           <td><?php echo $row['Issue']?></td>
           <td><?php echo $row['Time']?></td>
+          <td><?php echo $row['Status']?></td>
           <td><a href="#" onclick="$(".invisible").toggle();">Update</td>
-      </tr><!-- Visible Row -->
-      <form id="Form2" method="post">
-      <tr class="invisible"><!-- Invisible Row -->
-      	<td><?php echo $row['ID']?></td>
-      	<td><input type="text" name="DateField" value="<?php echo $row['DateField']?>"></td>
-      	<td><input type="text" name="Equipment" value="<?php echo $row['Equipment']?>"></td>
-      	<td><input type="text" name="Issue" value="<?php echo $row['Issue']?>"></td>
-      	<td><input type="text" name="Time" value="<?php echo $row['Time']?>"></td>
-      	<td><input type="Submit" name="Form1_Submit" value="New Record"></td>
-      </tr><!-- Invisible Row -->
-    	</form>
+      </tr>
+      
+    	
     <!-- Close the database -->
 	  <?php
 	  }
@@ -103,13 +105,11 @@
 		    Content<br />
 		    Content<br />
 		</div>
-
 		<button id="slide_button">Slide it</button>
 		<div id="contact">
     Contact me!
 		</div>
 		<a href="#" id="toggle">Contact</a>
-
 		<div class="container">
 			<div class="dhead">
 			</div>
